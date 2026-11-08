@@ -512,6 +512,51 @@
   }
 
   /* ═══════════════════════════════════════════
+     Venue / Meal Guide Section
+     ═══════════════════════════════════════════ */
+
+  function renderGuideItems(items, containerId) {
+    const container = $(`#${containerId}`);
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (!Array.isArray(items)) return;
+
+    items.forEach((guide) => {
+      const item = document.createElement('div');
+      item.className = 'guide-item';
+
+      const icon = document.createElement('div');
+      icon.className = 'guide-icon';
+      icon.textContent = guide.icon || '';
+
+      const body = document.createElement('div');
+
+      const title = document.createElement('h3');
+      title.className = 'guide-item-title';
+      title.textContent = guide.title || '';
+
+      const content = document.createElement('p');
+      content.className = 'guide-item-content';
+      content.textContent = guide.content || '';
+
+      body.appendChild(title);
+      body.appendChild(content);
+
+      item.appendChild(icon);
+      item.appendChild(body);
+
+      container.appendChild(item);
+    });
+  }
+
+  function initGuides() {
+    renderGuideItems(CONFIG.venueGuide, 'venueGuideList');
+    renderGuideItems(CONFIG.mealGuide, 'mealGuideList');
+  }
+
+  /* ═══════════════════════════════════════════
      Account Section (축의금)
      ═══════════════════════════════════════════ */
 
@@ -650,6 +695,7 @@
     // Init sections that don't depend on image detection
     initPhotoViewer();
     initLocation();
+    initGuides();
     initAccounts();
     initFooter();
     initScrollAnimations();
